@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  #mongoDB service
+  mongo_db:
+    image: mongo:latest
+    restart: always
+    volumes: 
+      - mongo_db:/data/db
+
+  api:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      PORT: 5000  
+      MONGODB_URI: mongodb://mongo_db:27017
+    depends_on:
+      - mongo_db    
+
+    
+volumes:
+  mongo_db: {}
